@@ -1,0 +1,36 @@
+<mat-card class="login-card">
+    <mat-card-header>
+        <mat-card-title>
+            <h1 *ngIf="isLogin">Login</h1>
+            <h1 *ngIf="!isLogin">Create Account</h1>
+        </mat-card-title>
+        <mat-card-subtitle>Enter the required Information</mat-card-subtitle>
+    </mat-card-header>
+    <form [formGroup]="loginForm" class="login-form">
+        <mat-card-content class="card-content">
+            <mat-form-field class="field">
+                <mat-label>Name:</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <mat-form-field class="field">
+                <mat-label>Email:</mat-label>
+                <input matInput formControlName="email">
+            </mat-form-field>
+            <mat-form-field class="field">
+                <mat-label>Password:</mat-label>
+                <input matInput type="password" formControlName="password">
+            </mat-form-field>
+            <mat-form-field class="field">
+                <mat-label>Retype Password:</mat-label>
+                <input matInput type="password" formControlName="rePassword">
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions class="card-actions">
+            <button class="large-btn" type="submit" (click)="submitForm()" mat-stroked-button
+                color="primary">Send</button>
+        </mat-card-actions>
+    </form>
+    <mat-card-footer>
+        <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+    </mat-card-footer>
+</mat-card>
