@@ -2,6 +2,7 @@
     max-width: 800px;
     width: 80vw;
     min-width: 300px;
+    padding: 2rem 1rem;
 }
 
 .card-content,
@@ -10,14 +11,26 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    padding: 2rem;
+    padding: 0 0 1rem;
     gap: 1rem;
 }
 
 .field {
-    width: 80%;
+    width: 95%;
 }
 
 .large-btn {
-    width: 80%;
+    box-sizing: border-box;
+    width: 95%;
+    padding: 1rem;
+}
+
+.card-title {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.card-header {
+    text-align: center;
 }

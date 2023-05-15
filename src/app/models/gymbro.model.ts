@@ -1,4 +1,4 @@
-export interface User{
+export interface Gymbro {
   id: string;
   partnerId: string;
   name: string;

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { FirebaseService } from '../http/firebase.service';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -14,9 +15,6 @@ export class AuthGuard implements CanActivate {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): boolean | Promise<boolean> {
         var isAuthenticated = this.firebaseService.getAuthStatus();
-        if (!isAuthenticated) {
-            this.router.navigate(['/login']);
-        }
         return isAuthenticated;
     }
 }

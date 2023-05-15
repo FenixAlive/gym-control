@@ -1,56 +1,56 @@
 import { Injectable } from '@angular/core';
 import { Partner } from '../models/partner.model';
-import { User } from '../models/user.model';
+import { Gymbro } from '../models/gymbro.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocalStorageService {
-  users: User[] = [];
+  users: Gymbro[] = [];
   partner: Partner = {} as Partner;
-  nameUsersKey = 'users';
+  nameGymbrosKey = 'users';
   namePartnerKey = 'partner';
   constructor() {
     console.log(this.partner);
   }
 
-  getLocalStorageUsers(): User[]{
-    this.users = JSON.parse(localStorage.getItem(this.nameUsersKey) ?? '[]') ?? [];
+  getLocalStorageGymbros(): Gymbro[] {
+    this.users = JSON.parse(localStorage.getItem(this.nameGymbrosKey) ?? '[]') ?? [];
     return this.users;
   }
 
-  setLocalStorageUsers(users: User[]): User[]{
-    localStorage.setItem(this.nameUsersKey, JSON.stringify(users));
+  setLocalStorageGymbros(users: Gymbro[]): Gymbro[] {
+    localStorage.setItem(this.nameGymbrosKey, JSON.stringify(users));
     this.users = [...users];
     return users;
   }
 
-  addLocalStorageUser(user: User): User{
-    let exists = this.users.findIndex(element =>{
+  addLocalStorageGymbro(user: Gymbro): Gymbro {
+    let exists = this.users.findIndex(element => {
       user?.id === element?.id || user?.internalId === element?.internalId
     })
-    if(exists >= 0){
+    if (exists >= 0) {
       console.log('updating user');
       this.users[exists] = user;
-    }else{
-      console.log('Creating User');
+    } else {
+      console.log('Creating Gymbro');
       this.users.push(user);
     }
-    this.setLocalStorageUsers(this.users);
+    this.setLocalStorageGymbros(this.users);
     return user;
   }
 
-  deleteLocalStorageUser(user: User): User | null{
-    let exists = this.users.findIndex(element =>{
+  deleteLocalStorageGymbro(user: Gymbro): Gymbro | null {
+    let exists = this.users.findIndex(element => {
       user?.id === element?.id || user?.internalId === element?.internalId
     })
-    if(exists >= 0 ){
+    if (exists >= 0) {
       console.log('deleting user');
-      this.users.splice(exists,1);
-      this.setLocalStorageUsers(this.users);
+      this.users.splice(exists, 1);
+      this.setLocalStorageGymbros(this.users);
       return user;
-    }else{
-      console.error('User not found to be deleted');
+    } else {
+      console.error('Gymbro not found to be deleted');
       return null;
     }
   }

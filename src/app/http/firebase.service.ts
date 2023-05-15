@@ -1,96 +1,124 @@
 import { Injectable } from '@angular/core'
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential, User } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, User, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
 
-  private firebaseConfig = {
-    apiKey: "AIzaSyAXPKnSGw--fJ-FJNR1rlPNBLOfZTMXKUI",
-    authDomain: "gym-control-6ab45.firebaseapp.com",
-    projectId: "gym-control-6ab45",
-    storageBucket: "gym-control-6ab45.appspot.com",
-    messagingSenderId: "210396065339",
-    appId: "1:210396065339:web:3d45819180e9a8993bb61e",
-    measurementId: "G-WG3HTSZGDS"
-  };
+  firebaseConfig = environment.firebase;
 
   app = initializeApp(this.firebaseConfig);
   auth = getAuth(this.app);
   db = getFirestore(this.app);
-  partner = new BehaviorSubject({} as User);
+  googleProvider = new GoogleAuthProvider()
+  partner: BehaviorSubject<User> = new BehaviorSubject({} as User);
 
+  constructor(private snackBar: MatSnackBar) {
+    this.auth.onAuthStateChanged(user => {
+      console.log(user)
+      this.partner.next(user ?? {} as User);
+    })
+  }
 
-  createAccount(email: string | null, password: string | null, name = ''): void {
+  openSnackbar(message: string, action: string = 'Ok'): void {
+    this.snackBar.open(message, action,
+      { duration: 7000 })
+  }
+
+  createAccount(email: string | null, password: string | null, name: string | null): void {
     if (!email || !password) return;
 
     createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         // Signed in
-        this.partner.next(userCredential.user);
-        console.log(userCredential)
-        // ...
+        this.partner?.next(userCredential.user);
+        this.openSnackbar("User created successfully");
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        console.error(errorMessage);
+        this.openSnackbar("Error creating user account: " + errorMessage);
         // ..
       });
   }
 
-  login(email: string | null, password: string | null, name = ''): void {
+  login(email: string | null, password: string | null): void {
     if (!email || !password) return;
     signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        this.partner.next(userCredential.user);
-        console.log(userCredential)
-        // ...
+        this.partner?.next(user);
+        this.openSnackbar("User logged in successfully");
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-      });
+        console.error(errorMessage)
+        this.openSnackbar("Error trying to login account: " + errorMessage)
+      })
   }
 
   logout(): void {
-
+    signOut(this.auth).then(() => {
+      this.partner?.next({} as User);
+      this.openSnackbar("User Sign-out successful");
+    }).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(errorMessage)
+      this.openSnackbar("Error Signning out account: " + errorMessage)
+    });
   }
 
   editPartner(): void {
 
   }
 
-  getUsers(): void {
+  getGymbro(): void {
 
   }
 
-  getUserWith(): void {
+  getGymbroWith(): void {
 
   }
 
-  newUser(): void {
+  newGymbro(): void {
 
   }
 
-  editUser(): void {
+  editGymbro(): void {
 
   }
 
-  removeUser(): void {
+  removeGymbro(): void {
 
   }
 
   getAuthStatus(): boolean {
-    if (this.partner.value?.uid) {
-      return true;
-    }
-    return false;
+    return Boolean(this.partner?.value?.uid)
+  }
+
+  signInWithGoogle(): void {
+    signInWithPopup(this.auth, this.googleProvider).then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      this.partner?.next(user);
+      this.openSnackbar("User logged in successfully");
+    })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error(errorMessage)
+        this.openSnackbar("Error trying to login account: " + errorMessage)
+      })
   }
 }
 

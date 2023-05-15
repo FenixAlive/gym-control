@@ -21,7 +21,10 @@ const routes: Routes = [
     path: 'settings', component: SettingsComponent,
     canActivate: [AuthGuard]
   },
-  { path: '', component: HomeComponent },
+  {
+    path: '', component: HomeComponent,
+    canActivate: [AuthGuard]
+  },
   { path: '**', redirectTo: '/', pathMatch: 'full' }
 ];
 
