@@ -1,8 +1,8 @@
 export interface Gymbro {
-  id: string;
+  id?: string;
   partnerId: string;
   name: string;
-  lastName: string;
+  lastName?: string;
   internalId?: string;
   created: Date;
   updated?: Date;

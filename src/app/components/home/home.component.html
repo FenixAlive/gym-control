@@ -1,1 +1,2 @@
-<app-search></app-search>
+<app-search *ngIf="firebaseService.isGymbros"></app-search>
+<app-create-user *ngIf="!firebaseService.isGymbros"></app-create-user>

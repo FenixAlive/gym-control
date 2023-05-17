@@ -24,6 +24,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -43,6 +44,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatAutocompleteModule,
     MatIconModule,
     MatButtonModule,
     MatCardModule,
@@ -57,7 +59,6 @@ import { HttpClientModule } from '@angular/common/http';
     MatDialogModule,
     HttpClientModule
   ],
-  providers: [LocalStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

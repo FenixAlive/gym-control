@@ -1,0 +1,20 @@
+.search {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+}
+
+.form-field {
+    min-width: 300px;
+    width: 70vw;
+    max-width: 700px;
+}
+
+.option-expired {
+    background-color: #F55;
+}
+
+.option-vigent {
+    background-color: #33ff8f;
+}
