@@ -42,8 +42,12 @@ export class SearchComponent implements OnInit {
   }
 
   onSelectionChanged(e: MatAutocompleteSelectedEvent): void {
-    console.log(e?.option?.value);
     this.selectedGymbro = e?.option?.value ?? undefined;
     this.searchControl.reset();
+  }
+
+  removeGymbro(): void {
+    this.firebaseService.removeGymbro(this.selectedGymbro?.id)
+    this.selectedGymbro = undefined;
   }
 }

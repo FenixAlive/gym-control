@@ -1,1 +1,68 @@
-<p>create-user works!</p>
+<mat-card class="login-card">
+    <mat-card-header class="card-header">
+        <mat-card-title class="card-title">
+            <mat-icon>person_add</mat-icon>
+            <h3>Create Gymbro</h3>
+        </mat-card-title>
+        <mat-card-subtitle>Enter the required Information</mat-card-subtitle>
+    </mat-card-header>
+    <form [formGroup]="createForm" class="login-form">
+        <mat-card-content class="card-content">
+            <mat-form-field class="field">
+                <mat-label>Name:</mat-label>
+                <input matInput formControlName="name">
+                <mat-error *ngIf="createForm.controls?.['name']?.hasError('required')">name required</mat-error>
+            </mat-form-field>
+            <mat-form-field class="field">
+                <mat-label>Last Name:</mat-label>
+                <input matInput formControlName="lastName">
+                <mat-error *ngIf="createForm.controls?.['lastName']?.hasError('required')">required</mat-error>
+            </mat-form-field>
+            <mat-form-field class="field">
+                <mat-label>Internal Id:</mat-label>
+                <input matInput formControlName="internalId">
+                <mat-error *ngIf="createForm.controls?.['internalId']?.hasError('required')">required</mat-error>
+            </mat-form-field>
+            <mat-form-field class="field date-input">
+                <mat-label>Subscription Start:</mat-label>
+                <input matInput [matDatepicker]="datepicker" formControlName="subscriptionStart">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                <mat-datepicker #datepicker>
+                    <mat-datepicker-actions>
+                        <button mat-button matDatepickerCancel>Cancel</button>
+                        <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                    </mat-datepicker-actions>
+                </mat-datepicker>
+                <mat-error *ngIf="createForm.controls?.['subscriptionStart']?.hasError('required')">required</mat-error>
+            </mat-form-field>
+            <mat-form-field class="field">
+                <mat-label>Subscription duration (months):</mat-label>
+                <input type="number" matInput formControlName="subscriptionLap" min="0">
+                <mat-error *ngIf="createForm.controls?.['subscriptionLap']?.hasError('required')">required</mat-error>
+            </mat-form-field>
+            <mat-form-field class="field">
+                <mat-label>E-mail:</mat-label>
+                <input matInput formControlName="email">
+                <mat-error *ngIf="createForm.controls?.['email']?.hasError('required')">E-mail required</mat-error>
+                <mat-error *ngIf="createForm.controls?.['email']?.hasError('pattern')">Invalid e-mail format</mat-error>
+            </mat-form-field>
+            <mat-form-field class="field">
+                <mat-label>Phone:</mat-label>
+                <input matInput type="tel" formControlName="phone">
+                <mat-error *ngIf="createForm.controls?.['phone']?.hasError('pattern')">Phone invalid</mat-error>
+            </mat-form-field>
+
+        </mat-card-content>
+        <mat-card-actions class="card-actions">
+            <button class="large-btn" type="" (click)="submitForm($event)" mat-stroked-button color="primary"
+                [disabled]="createForm.invalid">Create
+                Gymbro
+            </button>
+        </mat-card-actions>
+    </form>
+    <mat-card-footer>
+        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+    </mat-card-footer>
+
+</mat-card>

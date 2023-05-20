@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   showFiller = false;
   titles = {};
   isLogin = false;
+  isLoading = true;
   constructor(public firebaseService: FirebaseService, private router: Router) { }
 
   ngOnInit(): void {
@@ -24,6 +25,7 @@ export class AppComponent implements OnInit {
         this.isLogin = false;
         this.router.navigate(['/login']);
       }
+      this.isLoading = false;
     })
   }
 

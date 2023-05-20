@@ -5,16 +5,73 @@
     align-items: center;
 }
 
-.form-field {
-    min-width: 300px;
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
     width: 70vw;
-    max-width: 700px;
+    max-width: 900px;
+    min-width: 400px;
+
+}
+
+.form-field {
+    width: 100%;
 }
 
 .option-expired {
-    background-color: #F55;
+    background-color: var(--alert);
 }
 
 .option-vigent {
-    background-color: #33ff8f;
+    background-color: var(--success);
+}
+
+.option-vigent:hover,
+.option-expired:hover {
+    font-weight: bold !important;
+}
+
+.card-header {
+    border-bottom: 1px solid #777;
+    padding-bottom: 0.3rem;
+}
+
+.content {
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    overflow: hidden;
+}
+
+.gymbro-data-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+    border: 1px dashed #777;
+    border-radius: 0.3rem;
+    padding: 0.3rem 0.5rem;
+    margin: 0.15rem;
+    width: auto;
+    flex-grow: 1;
+}
+
+.gymbro-data-title {
+    text-align: left;
+    font-weight: bold;
+}
+
+.gymbro-data {
+    text-align: left;
+}
+
+.mat-actions {
+    border-top: 1px solid #777;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
 }

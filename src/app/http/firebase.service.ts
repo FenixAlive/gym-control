@@ -134,8 +134,11 @@ export class FirebaseService {
     });
   }
 
-  removeGymbro(id: string): void {
-    const gymbroDoc = doc(this.db, this.gymbroCollectionName, id);
+  removeGymbro(id: string | undefined): void {
+    if (!id) {
+      this.openSnackbar('Error trying to delete gymbro: Error getting gymbro id');
+    }
+    const gymbroDoc = doc(this.db, this.gymbroCollectionName, id as string);
     deleteDoc(gymbroDoc).then(() => {
       this.getGymbros();
       this.openSnackbar('Gymbro deleted successfully');
