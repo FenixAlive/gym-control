@@ -22,6 +22,8 @@ export class DetailsComponent {
 
   editGymbro(): void {
     const dialogRef = this.dialog.open(CreateUserComponent, {
+      maxHeight: '98vh',
+      maxWidth: '98vh',
       data: {
         ...this.gymbro
       }
@@ -36,6 +38,8 @@ export class DetailsComponent {
 
   removeGymbro(): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxHeight: '98vh',
+      maxWidth: '98vh',
       data: {
         title: 'Remove Gymbro',
         content: `Are you sure you want to delete Gymbro ${this.gymbro?.name} ${this.gymbro?.lastName ?? ''}`

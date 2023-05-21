@@ -51,6 +51,8 @@ export class SearchComponent implements OnInit {
 
   editGymbro(): void {
     const dialogRef = this.dialog.open(CreateUserComponent, {
+      maxHeight: '98vh',
+      maxWidth: '98vh',
       data: {
         ...this.selectedGymbro
       }
@@ -65,6 +67,8 @@ export class SearchComponent implements OnInit {
 
   removeGymbro(): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxHeight: '98vh',
+      maxWidth: '98vh',
       data: {
         title: 'Remove Gymbro',
         content: `Are you sure you want to delete Gymbro ${this.selectedGymbro?.name} ${this.selectedGymbro?.lastName ?? ''}`
