@@ -9,9 +9,15 @@ import { FirebaseService } from 'src/app/http/firebase.service';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor(private readonly firebaseService: FirebaseService, private router: Router) { }
+  constructor(public readonly firebaseService: FirebaseService, private router: Router) { }
 
   ngOnInit(): void {
+    console.log(this.firebaseService.auth)
+    console.log(this.firebaseService.partner.value)
+
+  }
+
+  submitSettings(): void {
 
   }
 }

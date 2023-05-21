@@ -1,8 +1,12 @@
 <mat-card class="login-card">
     <mat-card-header class="card-header">
-        <mat-card-title class="card-title">
+        <mat-card-title class="card-title" *ngIf="data?.id">
+            <mat-icon>edit</mat-icon>
+            <h3>Edit Gymbro</h3>
+        </mat-card-title>
+        <mat-card-title class="card-title" *ngIf="!data?.id">
             <mat-icon>person_add</mat-icon>
-            <h3>Create Gymbro</h3>
+            <h3>New Gymbro</h3>
         </mat-card-title>
         <mat-card-subtitle>Enter the required Information</mat-card-subtitle>
     </mat-card-header>
@@ -30,8 +34,8 @@
                 <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
                 <mat-datepicker #datepicker>
                     <mat-datepicker-actions>
-                        <button mat-button matDatepickerCancel>Cancel</button>
-                        <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                        <button mat-stroked-button matDatepickerCancel>Cancel</button>
+                        <button mat-stroked-button color="primary" matDatepickerApply>Apply</button>
                     </mat-datepicker-actions>
                 </mat-datepicker>
                 <mat-error *ngIf="createForm.controls?.['subscriptionStart']?.hasError('required')">required</mat-error>
@@ -56,9 +60,13 @@
         </mat-card-content>
         <mat-card-actions class="card-actions">
             <button class="large-btn" type="" (click)="submitForm($event)" mat-stroked-button color="primary"
-                [disabled]="createForm.invalid">Create
-                Gymbro
+                [disabled]="createForm.invalid || createForm.pristine">
+                <mat-icon>send</mat-icon>
+                Send
             </button>
+            <button mat-stroked-button mat-dialog-close class="large-btn" *ngIf="data?.id">
+                <mat-icon>close</mat-icon>
+                Cancel</button>
         </mat-card-actions>
     </form>
     <mat-card-footer>

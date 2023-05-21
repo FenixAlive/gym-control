@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable, map, startWith } from 'rxjs';
 import { FirebaseService } from 'src/app/http/firebase.service';
 import { Gymbro } from 'src/app/models/gymbro.model';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { CreateUserComponent } from '../create-user/create-user.component';
 
 @Component({
   selector: 'app-search',
@@ -15,7 +18,7 @@ export class SearchComponent implements OnInit {
   filteredOptions!: Observable<Gymbro[]>;
   selectedGymbro: Gymbro | undefined;
 
-  constructor(public firebaseService: FirebaseService) { }
+  constructor(public firebaseService: FirebaseService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.filteredOptions = this.searchControl.valueChanges.pipe(
@@ -46,8 +49,33 @@ export class SearchComponent implements OnInit {
     this.searchControl.reset();
   }
 
+  editGymbro(): void {
+    const dialogRef = this.dialog.open(CreateUserComponent, {
+      data: {
+        ...this.selectedGymbro
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(response => {
+      if (response === true) {
+        this.selectedGymbro = undefined;
+      }
+    })
+  }
+
   removeGymbro(): void {
-    this.firebaseService.removeGymbro(this.selectedGymbro?.id)
-    this.selectedGymbro = undefined;
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Remove Gymbro',
+        content: `Are you sure you want to delete Gymbro ${this.selectedGymbro?.name} ${this.selectedGymbro?.lastName ?? ''}`
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(response => {
+      if (response === true) {
+        this.firebaseService.removeGymbro(this.selectedGymbro?.id)
+        this.selectedGymbro = undefined;
+      }
+    })
   }
 }

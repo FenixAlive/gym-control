@@ -1,1 +1,27 @@
-<p>settings works!</p>
+<mat-card class="container">
+    <mat-card-header class="card-header">
+        <div mat-card-avatar class="">
+            <img *ngIf="firebaseService.partner.value?.photoURL" src="{{firebaseService.partner.value?.photoURL}}"
+                alt="" class="partner-photo">
+            <mat-icon *ngIf="!firebaseService.partner.value?.photoURL">account_circle</mat-icon>
+
+        </div>
+        <mat-card-title class="card-title">
+            Settings
+        </mat-card-title>
+        <mat-card-subtitle><span class="partner-name">{{firebaseService.partner.value?.displayName ??
+                ''}}</span></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <form>
+            edit user
+        </form>
+        <div>language: Spanish-English</div>
+    </mat-card-content>
+    <mat-card-actions class="card-actions">
+        <button class="large-btn" type="" (click)="submitSettings()" mat-stroked-button color="primary">
+            <mat-icon>send</mat-icon>
+            Send
+        </button>
+    </mat-card-actions>
+</mat-card>

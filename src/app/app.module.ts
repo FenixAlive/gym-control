@@ -25,10 +25,11 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { HttpClientModule } from '@angular/common/http';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     SettingsComponent,
     SearchComponent,
     HomeComponent,
-    DetailsComponent
+    DetailsComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -61,9 +63,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    //MatMomentDateModule,
     HttpClientModule
   ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

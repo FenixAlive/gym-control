@@ -1,0 +1,40 @@
+.partner-photo {
+    object-fit: cover;
+    width: 3rem;
+    border-radius: 50%;
+}
+
+.card-content,
+.card-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 0 1rem;
+    gap: 0.5rem;
+}
+
+.card-actions {
+    padding-top: 1rem;
+}
+
+.field {
+    width: 95%;
+}
+
+.large-btn {
+    box-sizing: border-box;
+    width: 95%;
+    padding: 1rem;
+}
+
+.card-title {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.card-header {
+    text-align: center;
+    padding-bottom: 1rem;
+}

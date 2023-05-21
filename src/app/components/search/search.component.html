@@ -6,78 +6,16 @@
                 [matAutocomplete]="auto">
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn"
                 (optionSelected)="onSelectionChanged($event)">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
-                    [ngClass]="isExpired(option) ? 'option-expired' : 'option-vigent'">
-                    {{option?.internalId ?? ''}} - {{option?.name ?? ''}} {{option?.lastName ?? ''}}
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    <div [ngClass]="isExpired(option) ? 'option-expired' : 'option-vigent'" class="round-option-title">
+                        {{'( '+ (option?.internalId ?? '--')+ ' ) '}} {{option?.name?.toUpperCase() ?? ''}}
+                        {{option?.lastName?.toUpperCase() ?? ''}}
+                    </div>
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>
     </form>
-    <mat-card *ngIf="selectedGymbro">
-        <mat-card-header [ngClass]="isExpired(selectedGymbro) ? 'option-expired' : 'option-vigent'" class="card-header">
-            <mat-card-title>
-                {{selectedGymbro?.name ?? ''}} {{selectedGymbro.lastName ?? ''}}
-            </mat-card-title>
-            <mat-card-subtitle>{{selectedGymbro?.internalId ?? ''}}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content class="content">
-            <div class="gymbro-data-container">
-                <div class="gymbro-data-title">
-                    Subscription start date:
-                </div>
-                <div class="gymbro-data">
-                    {{selectedGymbro?.subscriptionStart ?? 'No start date' | date}}
-                </div>
-            </div>
-            <div class="gymbro-data-container">
-                <div class="gymbro-data-title">
-                    Subscription end date:
-                </div>
-                <div class="gymbro-data">
-                    {{selectedGymbro?.subscriptionEnd ?? 'Forever' | date}}
-                </div>
-            </div>
-            <div class="gymbro-data-container" *ngIf="selectedGymbro?.subscriptionLap">
-                <div class="gymbro-data-title">
-                    Subscription duration:
-                </div>
-                <div class="gymbro-data">
-                    {{selectedGymbro?.subscriptionLap ?? ''}} month{{selectedGymbro.subscriptionLap &&
-                    selectedGymbro.subscriptionLap > 1 ? 's' : ''}}
-                </div>
-            </div>
-            <div class="gymbro-data-container" *ngIf="selectedGymbro?.phone">
-                <div class="gymbro-data-title">
-                    Phone:
-                </div>
-                <div class="gymbro-data">
-                    {{selectedGymbro?.phone ?? ''}}
-                </div>
-            </div>
-            <div class="gymbro-data-container" *ngIf="selectedGymbro?.email">
-                <div class="gymbro-data-title">
-                    E-mail:
-                </div>
-                <div class="gymbro-data">
-                    {{selectedGymbro?.email ?? ''}}
-                </div>
-            </div>
-            <div class="gymbro-data-container">
-                <div class="gymbro-data-title">
-                    Updated:
-                </div>
-                <div class="gymbro-data">
-                    {{selectedGymbro?.updated ?? selectedGymbro?.created ?? '' | date}}
-                </div>
-            </div>
-
-        </mat-card-content>
-        <mat-card-actions class="mat-actions">
-            <button mat-stroked-button color="secondary"><mat-icon>edit</mat-icon> Edit Gymbro</button>
-            <button mat-stroked-button color="warn" (click)="removeGymbro()"><mat-icon>delete</mat-icon> Remove
-                Gymbro</button>
-        </mat-card-actions>
-    </mat-card>
+    <app-details [gymbro]="selectedGymbro"></app-details>
     <div *ngIf="!firebaseService.isGymbros">
         <h2>There is no data to search</h2>
         <button mat-stroked-button color="primary" [routerLink]="['new']"> Add gymbro</button>

@@ -15,3 +15,12 @@ body {
     --success: #98ffba;
     --alert: #ff9898;
 }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    width: 70vw;
+    max-width: 900px;
+    min-width: 390px;
+}

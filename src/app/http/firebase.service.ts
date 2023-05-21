@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, updateDoc, query, where } from 'firebase/firestore/lite';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, User, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Gymbro } from '../models/gymbro.model';
@@ -115,7 +115,7 @@ export class FirebaseService {
 
   newGymbro(gymbro: Gymbro): void {
     gymbro.partnerId = this.auth?.currentUser?.uid ?? '';
-    addDoc(this.gymbroCollection, gymbro).then(() => {
+    addDoc(this.gymbroCollection, gymbro).then(gymbro => {
       this.getGymbros();
       this.openSnackbar('Gymbro added successfully');
     }).catch(error => {
@@ -123,9 +123,11 @@ export class FirebaseService {
     });
   }
 
-  editGymbro(id: string, gymbro: Gymbro): void {
-    const gymbroDoc = doc(this.db, this.gymbroCollectionName, id);
-    gymbro.id = undefined;
+  editGymbro(id: string | undefined, gymbro: Gymbro): void {
+    if (!id) {
+      this.openSnackbar('Error trying to delete gymbro: Error getting gymbro id');
+    }
+    const gymbroDoc = doc(this.db, this.gymbroCollectionName, id as string);
     updateDoc(gymbroDoc, { ...gymbro }).then(() => {
       this.getGymbros();
       this.openSnackbar('Gymbro updated successfully');
