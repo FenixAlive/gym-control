@@ -30,7 +30,9 @@ mat-sidenav {
   align-items: center;
   width: 100%;
   min-width: 400px;
-  height: 90vh;
+  height: auto;
+  min-height: 70%;
+  overflow: hidden;
 }
 
 .partner-name {
@@ -62,6 +64,17 @@ mat-sidenav {
 
 .profile-button:hover {
   background-color: #9992;
+}
+
+.sidenav-item {
+  height: 64px;
+  display: flex;
+  box-sizing: border-box;
+  padding: 0 16px;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
 }
 
 .logo {
