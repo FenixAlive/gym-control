@@ -29,10 +29,8 @@ mat-sidenav {
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-width: 400px;
   height: auto;
   min-height: 70%;
-  overflow: hidden;
 }
 
 .partner-name {
@@ -93,3 +91,5 @@ mat-sidenav {
     display: none;
   }
 }
+
+@media only screen and (max-width: 390px) {}

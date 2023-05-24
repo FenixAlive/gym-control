@@ -22,5 +22,10 @@ body {
     gap: 3rem;
     width: 70vw;
     max-width: 900px;
-    min-width: 390px;
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        width: 95vw;
+    }
 }

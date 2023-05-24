@@ -64,5 +64,7 @@
             Gymbro</button>
         <button mat-stroked-button color="warn" (click)="removeGymbro()"><mat-icon>delete</mat-icon> Remove
             Gymbro</button>
+        <button mat-stroked-button color="primary" (click)="closeDialog()" *ngIf="data"><mat-icon>cancel</mat-icon>
+            Close</button>
     </mat-card-actions>
 </mat-card>

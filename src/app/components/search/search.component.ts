@@ -7,6 +7,7 @@ import { FirebaseService } from 'src/app/http/firebase.service';
 import { Gymbro } from 'src/app/models/gymbro.model';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { CreateUserComponent } from '../create-user/create-user.component';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-search',
@@ -18,7 +19,7 @@ export class SearchComponent implements OnInit {
   filteredOptions!: Observable<Gymbro[]>;
   selectedGymbro: Gymbro | undefined;
 
-  constructor(public firebaseService: FirebaseService, private dialog: MatDialog) { }
+  constructor(public firebaseService: FirebaseService, private dialog: MatDialog, private helperService: HelperService) { }
 
   ngOnInit() {
     this.filteredOptions = this.searchControl.valueChanges.pipe(
@@ -50,36 +51,14 @@ export class SearchComponent implements OnInit {
   }
 
   editGymbro(): void {
-    const dialogRef = this.dialog.open(CreateUserComponent, {
-      maxHeight: '98vh',
-      maxWidth: '98vh',
-      data: {
-        ...this.selectedGymbro
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(response => {
-      if (response === true) {
-        this.selectedGymbro = undefined;
-      }
+    this.helperService.editGymbro(this.selectedGymbro as Gymbro, () => {
+      this.selectedGymbro = undefined;
     })
   }
 
   removeGymbro(): void {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      maxHeight: '98vh',
-      maxWidth: '98vh',
-      data: {
-        title: 'Remove Gymbro',
-        content: `Are you sure you want to delete Gymbro ${this.selectedGymbro?.name} ${this.selectedGymbro?.lastName ?? ''}`
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(response => {
-      if (response === true) {
-        this.firebaseService.removeGymbro(this.selectedGymbro?.id)
-        this.selectedGymbro = undefined;
-      }
+    this.helperService.removeGymbro(this.selectedGymbro as Gymbro, () => {
+      this.selectedGymbro = undefined;
     })
   }
 }

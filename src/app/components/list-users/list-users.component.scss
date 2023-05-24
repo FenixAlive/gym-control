@@ -2,10 +2,6 @@
     width: 100%;
 }
 
-.container {
-    width: auto !important;
-}
-
 .option-expired {
     background-color: var(--alert);
 }
@@ -61,4 +57,13 @@
     display: flex;
     flex-direction: row;
     gap: 1rem;
+}
+
+.container {
+    overflow: auto;
+    width: 95vw;
+}
+
+.filter {
+    width: 100%;
 }

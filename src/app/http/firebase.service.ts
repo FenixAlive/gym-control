@@ -125,7 +125,7 @@ export class FirebaseService {
 
   editGymbro(id: string | undefined, gymbro: Gymbro): void {
     if (!id) {
-      this.openSnackbar('Error trying to delete gymbro: Error getting gymbro id');
+      this.openSnackbar('Error trying to edit gymbro: Error getting gymbro id');
     }
     const gymbroDoc = doc(this.db, this.gymbroCollectionName, id as string);
     updateDoc(gymbroDoc, { ...gymbro }).then(() => {

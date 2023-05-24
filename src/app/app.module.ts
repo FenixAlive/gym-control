@@ -30,7 +30,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { HttpClientModule } from '@angular/common/http';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,8 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     MatDatepickerModule,
     MatNativeDateModule,
     MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
     HttpClientModule
   ],
   providers: [],

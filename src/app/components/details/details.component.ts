@@ -1,8 +1,8 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, Inject, Input, Optional, Output } from '@angular/core';
 import { Gymbro } from 'src/app/models/gymbro.model';
 import { CreateUserComponent } from '../create-user/create-user.component';
 import { FirebaseService } from 'src/app/http/firebase.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -13,7 +13,13 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 export class DetailsComponent {
   @Input('gymbro') gymbro!: Gymbro | undefined;
 
-  constructor(public firebaseService: FirebaseService, private dialog: MatDialog) { }
+  gymbroState!: Gymbro;
+
+  constructor(public firebaseService: FirebaseService, private dialog: MatDialog, @Optional() @Inject(MAT_DIALOG_DATA) public data?: Gymbro, @Optional() public dialogRef?: MatDialogRef<CreateUserComponent>) {
+    if (this.data) {
+      this.gymbro = this.data;
+    }
+  }
 
   isExpired(gymbro: Gymbro): boolean {
     return gymbro?.subscriptionEnd ? gymbro.subscriptionEnd < (new Date()) : false;
@@ -39,7 +45,7 @@ export class DetailsComponent {
   removeGymbro(): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxHeight: '98vh',
-      maxWidth: '98vh',
+      maxWidth: '98vw',
       data: {
         title: 'Remove Gymbro',
         content: `Are you sure you want to delete Gymbro ${this.gymbro?.name} ${this.gymbro?.lastName ?? ''}`
@@ -52,5 +58,9 @@ export class DetailsComponent {
         this.gymbro = undefined;
       }
     })
+  }
+
+  closeDialog(): void {
+    this.dialogRef?.close();
   }
 }
