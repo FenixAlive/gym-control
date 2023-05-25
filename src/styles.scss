@@ -24,6 +24,19 @@ body {
     max-width: 900px;
 }
 
+.option-expired {
+    background-color: var(--alert);
+}
+
+.option-vigent {
+    background-color: var(--success);
+}
+
+.round-option-title {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
+
 @media only screen and (max-width: 600px) {
     .container {
         width: 95vw;

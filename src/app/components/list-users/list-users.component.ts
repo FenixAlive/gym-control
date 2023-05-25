@@ -15,7 +15,7 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./list-users.component.scss']
 })
 export class ListUsersComponent implements AfterViewInit {
-  displayedColumns: string[] = ['internalId', 'name', 'vigent', 'duration', 'updated', 'actions'];
+  displayedColumns: string[] = ['internalId', 'name', 'expiration', 'duration', 'updated', 'actions'];
   dataSource = new MatTableDataSource([] as Gymbro[]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -58,5 +58,9 @@ export class ListUsersComponent implements AfterViewInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  isExpired(gymbro: Gymbro): boolean {
+    return gymbro?.subscriptionEnd ? gymbro.subscriptionEnd < (new Date()) : false;
   }
 }
