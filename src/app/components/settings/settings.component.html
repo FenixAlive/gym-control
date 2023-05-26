@@ -4,7 +4,6 @@
             <img *ngIf="firebaseService.partner.value?.photoURL" src="{{firebaseService.partner.value?.photoURL}}"
                 alt="" class="partner-photo">
             <mat-icon *ngIf="!firebaseService.partner.value?.photoURL">account_circle</mat-icon>
-
         </div>
         <mat-card-title class="card-title">
             Settings
@@ -12,16 +11,57 @@
         <mat-card-subtitle><span class="partner-name">{{firebaseService.partner.value?.displayName ??
                 ''}}</span></mat-card-subtitle>
     </mat-card-header>
-    <mat-card-content>
-        <form>
-            edit user
+    <mat-card-content class="card-content">
+        <form [formGroup]="settingsForm" class="login-form">
+            <mat-form-field class="field">
+                <mat-label>Name:</mat-label>
+                <input matInput formControlName="name">
+
+            </mat-form-field>
+            <mat-form-field class="field">
+                <mat-label>E-mail:</mat-label>
+                <input matInput formControlName="email">
+                <mat-error *ngIf="settingsForm.controls?.['email']?.hasError('required')">E-mail required</mat-error>
+                <mat-error *ngIf="settingsForm.controls?.['email']?.hasError('pattern')">Invalid e-mail
+                    format</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <mat-label>Phone:</mat-label>
+                <input matInput formControlName="phone">
+                <mat-error *ngIf="settingsForm.controls?.['phone']?.hasError('required')">Phone required</mat-error>
+                <mat-error *ngIf="settingsForm.controls?.['phone']?.hasError('pattern')">Invalid phone
+                    format</mat-error>
+            </mat-form-field>
+            <mat-form-field class="field">
+                <mat-label>change password:</mat-label>
+                <input matInput type="password" formControlName="password">
+                <mat-error *ngIf="settingsForm.controls?.['password']?.hasError('required')">Password
+                    required</mat-error>
+                <mat-error *ngIf="settingsForm.controls?.['password']?.hasError('minlength')">At least eight
+                    characters</mat-error>
+            </mat-form-field>
+            <mat-form-field class="field">
+                <mat-label>Confirm Password:</mat-label>
+                <input matInput type="password" formControlName="rePassword">
+                <mat-error *ngIf="settingsForm.controls?.['rePassword']?.hasError('required')">Password
+                    required</mat-error>
+                <mat-error *ngIf="settingsForm.controls?.['rePassword']?.hasError('minlength')">At least eight
+                    characters</mat-error>
+                <mat-error *ngIf="settingsForm.controls?.['rePassword']?.hasError('samepass')">Password and confirm
+                    password do not coincide</mat-error>
+            </mat-form-field>
         </form>
-        <div>language: Spanish-English</div>
     </mat-card-content>
     <mat-card-actions class="card-actions">
-        <button class="large-btn" type="" (click)="submitSettings()" mat-stroked-button color="primary">
+        <button class="large-btn" type="button" (click)="submitSettings()" mat-stroked-button color="primary">
             <mat-icon>send</mat-icon>
-            Send
+            Save Changes
         </button>
     </mat-card-actions>
+    <mat-card-footer>
+        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+    </mat-card-footer>
+
 </mat-card>

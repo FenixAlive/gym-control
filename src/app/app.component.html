@@ -40,7 +40,7 @@
     </div>
     <hr>
     <button class="profile-button nav-item sidenav-item" aria-label="settings" [routerLink]="['settings']"
-      (click)="drawer.close()">
+      matTooltip="Account Settings" (click)="drawer.close()">
       <img *ngIf="firebaseService.partner.value?.photoURL" src="{{firebaseService.partner.value?.photoURL}}" alt=""
         class="partner-photo">
       <mat-icon *ngIf="!firebaseService.partner.value?.photoURL">account_circle</mat-icon>
