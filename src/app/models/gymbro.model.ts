@@ -11,4 +11,5 @@ export interface Gymbro {
   subscriptionLap?: number; //number of months
   phone?: string;
   email?: string;
+  subscriptionHistory?: { subscriptionStart: Date, subscriptionLap: number }[];
 }

@@ -29,10 +29,8 @@ export class LocalStorageService {
       user?.id === element?.id || user?.internalId === element?.internalId
     })
     if (exists >= 0) {
-      console.log('updating user');
       existingGymbros[exists] = user;
     } else {
-      console.log('Creating Gymbro');
       existingGymbros.push(user);
     }
     this.setLocalStorageGymbros(existingGymbros);
@@ -45,7 +43,6 @@ export class LocalStorageService {
       user?.id === element?.id || user?.internalId === element?.internalId
     })
     if (exists >= 0) {
-      console.log('deleting user');
       existingGymbros.splice(exists, 1);
       this.setLocalStorageGymbros(existingGymbros);
       return user;

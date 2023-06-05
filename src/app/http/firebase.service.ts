@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core'
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, updateDoc, query, where } from 'firebase/firestore/lite';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, User, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, User, signOut, GoogleAuthProvider, signInWithPopup, updateProfile, updateEmail, updatePassword } from "firebase/auth";
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Gymbro } from '../models/gymbro.model';
+import { Partner } from '../models/partner.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,6 @@ export class FirebaseService {
 
   constructor(private snackBar: MatSnackBar) {
     this.auth.onAuthStateChanged(user => {
-      console.log(user)
       this.partner.next(user ?? {} as User);
       if (user) {
         this.getGymbros();
@@ -85,8 +85,26 @@ export class FirebaseService {
     });
   }
 
-  editPartner(): void {
-
+  editPartner(partner: Partner): void {
+    updateProfile(this.auth.currentUser as User, { displayName: partner.name, photoURL: partner.photoUrl }).then(value => {
+      this.partner?.next(this.auth.currentUser as User);
+      this.openSnackbar("Edit User successfully");
+    }).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(errorMessage)
+      this.openSnackbar("Error Editing account: " + errorMessage)
+    });
+    if (partner.email && partner.email.trim() !== '') {
+      updateEmail(this.auth.currentUser as User, partner.email).then(() => {
+        this.openSnackbar("Edit Email successfully");
+      });
+    }
+    if (partner.password && partner.password.trim() !== '') {
+      updatePassword(this.auth.currentUser as User, partner.password).then(() => {
+        this.openSnackbar("Edit password successfully");
+      });
+    }
   }
 
   getGymbros(): void {
@@ -102,7 +120,6 @@ export class FirebaseService {
         return { ...data, id: doc.id } as any;
       })
       this.gymbros.next(result as Gymbro[]);
-      console.log(result)
     }).catch((error) => {
       console.error(error.message)
       this.openSnackbar("Error getting gymbros from database: " + error.message)

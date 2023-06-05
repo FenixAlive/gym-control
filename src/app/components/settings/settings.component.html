@@ -1,8 +1,7 @@
 <mat-card class="container">
     <mat-card-header class="card-header">
         <div mat-card-avatar class="">
-            <img *ngIf="firebaseService.partner.value?.photoURL" src="{{firebaseService.partner.value?.photoURL}}"
-                alt="" class="partner-photo">
+            <img *ngIf="this.photoUrl" src="{{this.photoUrl}}" alt="" class="partner-photo">
             <mat-icon *ngIf="!firebaseService.partner.value?.photoURL">account_circle</mat-icon>
         </div>
         <mat-card-title class="card-title">
@@ -12,11 +11,11 @@
                 ''}}</span></mat-card-subtitle>
     </mat-card-header>
     <mat-card-content class="card-content">
-        <form [formGroup]="settingsForm" class="login-form">
+        <form [formGroup]="settingsForm">
             <mat-form-field class="field">
                 <mat-label>Name:</mat-label>
                 <input matInput formControlName="name">
-
+                <mat-error *ngIf="settingsForm.controls?.['email']?.hasError('required')">Name required</mat-error>
             </mat-form-field>
             <mat-form-field class="field">
                 <mat-label>E-mail:</mat-label>
@@ -25,14 +24,14 @@
                 <mat-error *ngIf="settingsForm.controls?.['email']?.hasError('pattern')">Invalid e-mail
                     format</mat-error>
             </mat-form-field>
-
-            <mat-form-field class="field">
-                <mat-label>Phone:</mat-label>
-                <input matInput formControlName="phone">
-                <mat-error *ngIf="settingsForm.controls?.['phone']?.hasError('required')">Phone required</mat-error>
-                <mat-error *ngIf="settingsForm.controls?.['phone']?.hasError('pattern')">Invalid phone
-                    format</mat-error>
-            </mat-form-field>
+            <!--TODO: Upload photo to firestore cloud and share url of image to edit user photoUrl-->
+            <!--
+                <button type="button" mat-stroked-button class="large-btn" color="accent" (click)="fileInput.click()">
+                    Change Profile Photo
+                </button>
+                <input hidden (change)="onFileSelected($event)" #fileInput type="file" />
+            -->
+            <h3 class="title-pass">Optional Change Password: </h3>
             <mat-form-field class="field">
                 <mat-label>change password:</mat-label>
                 <input matInput type="password" formControlName="password">
@@ -54,7 +53,8 @@
         </form>
     </mat-card-content>
     <mat-card-actions class="card-actions">
-        <button class="large-btn" type="button" (click)="submitSettings()" mat-stroked-button color="primary">
+        <button class="large-btn" type="button" (click)="submitSettings()" mat-stroked-button color="primary"
+            [disabled]="settingsForm.invalid">
             <mat-icon>send</mat-icon>
             Save Changes
         </button>
@@ -63,5 +63,8 @@
         <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
 
     </mat-card-footer>
+
+</mat-card>
+<mat-card>
 
 </mat-card>

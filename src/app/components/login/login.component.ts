@@ -61,7 +61,6 @@ export class LoginComponent implements OnInit {
 
       if (val && val !== this.createForm.controls['password'].value) {
         rePasswordControl.setErrors({ ...rePasswordControl?.errors, samepass: true })
-        console.log(this.createForm)
       } else {
         this.createForm.controls['rePassword'].setValidators([Validators.required, Validators.minLength(8)])
       }
