@@ -48,7 +48,6 @@ export class CreateUserComponent {
         phone: [gymbro?.phone ?? '', [Validators.pattern(/^[0-9 -]{8,16}$/)]]
       }
     )
-    console.log(this.createForm)
   }
 
   submitForm(e: any): void {
